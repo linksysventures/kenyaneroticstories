@@ -1,0 +1,189 @@
+<?php
+
+if (!isset($_SESSION)) {
+
+  session_start();
+
+}
+
+$login = $_SERVER['PHP_SELF'];
+
+ 
+
+ 
+
+if (isset ($_POST["loginform"]) && ($_POST["loginform"]=="formlogin")){
+
+ 
+
+  $_SESSION['name']=$_POST['txtname'];
+
+  $_SESSION['emailid']=$_POST['txtemailid'];
+
+}
+
+ 
+
+ 
+
+$send = $_SERVER['PHP_SELF'];
+
+ 
+
+ 
+
+if (isset ($_POST["send"]) && ($_POST["send"]=="sendform")){
+
+ 
+
+ 
+
+}
+
+?>
+
+ 
+
+ 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Live  chat</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+
+function send()
+
+{
+
+  var sendtxt =document.getElementById("txtinput").value;
+
+ 
+
+ 
+
+  debugger;
+
+if (sendtxt.length == 0) {
+
+        document.getElementById("txt").innerHTML = "";
+
+        return;
+
+    } else {
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+  $(document).ready(function(){
+
+  $("#txt").append("<br>" +xmlhttp.responseText + "</br>");
+
+  alert(xmlhttp.responseText) ;
+
+  });
+
+;
+
+ 
+
+ 
+
+ 
+
+            }
+
+        }
+
+        xmlhttp.open("GET", "send.php?q=" + sendtxt, true);
+
+        xmlhttp.send();
+
+    }
+
+}
+
+ 
+
+ 
+
+</script>
+
+ 
+
+ 
+
+</head>
+
+ 
+
+ 
+
+<body>
+
+ 
+
+ 
+
+<form id="login" name="login" method="post" action="<?php echo $login; ?>">
+
+name<input type="text" id="txtname" name="txtname" > <br>
+
+email <input type="text" id="txtemailid" name="txtemailid" ><br>
+
+<input type="submit" value="Login" >
+
+<input type="hidden" name="loginform" value="formlogin">
+
+ 
+
+ 
+
+</form>
+
+ 
+
+ 
+
+ 
+
+ 
+
+<div id="chat" style="width:500px; height:250px; overflow:scroll; border:thin solid;" >
+
+<div id="txt" style="width:500px; height:200px;">
+
+ 
+
+ 
+
+</div>
+
+<div id="chattext" style="position:fixed">
+
+<input type="text" id="txtinput" width="500px" height="50px">
+
+<input type="submit" value="Send" onclick="send()">
+
+</div>
+
+</div>
+
+ 
+
+ 
+
+</body>
+
+</html>
